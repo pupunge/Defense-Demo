@@ -3,6 +3,9 @@ var img = {
     'Tile' : new Image(),
     'Spawn' : new Image(),
     'Core' : new Image(),
+
+    'EnergyEmpty' : new Image(),
+    'EnergyFull' : new Image(),
 };
 
 function imageLoad() {
@@ -10,6 +13,10 @@ function imageLoad() {
     img['Tile'].src = 'Image/Tile.png';
     img['Spawn'].src = 'Image/Spawn.png';
     img['Core'].src = 'Image/Core.png';
+
+    img['EnergyEmpty'].src = 'Image/EnergyEmpty.png';
+    img['EnergyFull'].src = 'Image/EnergyFull.png';
+
 }
 
 function addOffscreenCanvas() {
@@ -36,4 +43,16 @@ function addOffscreenCanvas() {
     canvas.core.width = 64;
     canvas.core.height = 64;
     canvas.coreCtx.drawImage(img['Core'], 0, 0);
+
+    canvas.energyEmpty = document.createElement('canvas');
+    canvas.energyEmptyCtx = canvas.energyEmpty.getContext('2d');
+    canvas.energyEmpty.width = 64;
+    canvas.energyEmpty.height = 32;
+    canvas.energyEmptyCtx.drawImage(img['EnergyEmpty'], 0, 0);
+
+    canvas.energyFull = document.createElement('canvas');
+    canvas.energyFullCtx = canvas.energyFull.getContext('2d');
+    canvas.energyFull.width = 64;
+    canvas.energyFull.height = 32;
+    canvas.energyFullCtx.drawImage(img['EnergyFull'], 0, 0);
 }

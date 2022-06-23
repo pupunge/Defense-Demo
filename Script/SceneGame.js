@@ -12,11 +12,19 @@ var UIGame = {
         deckRightButton : [704, 320, 192, 64],
         startButton : [512, 384, 384, 128],
         startText : [520, 464],
-    }
+    },
+
+    lowerUI : {
+        energyText : [112, 558],
+        energyBar : [192, 544],
+    },
 };
 
 function loopGame() {
     displayGame();
+    if (state === 'Game') {
+        gameTick();
+    }
 }
 
 function displayGame() {
@@ -39,6 +47,7 @@ function displayGame() {
         strokeRectArray(UIGame.start.startButton);
         context.fillText(`Start`, UIGame.start.startText[0], UIGame.start.startText[1]);
     } else if (state === 'Game') {
+        // Field
         for (var i = 0; i < gameField.length; i++) {
             for (var j = 0; j < gameField[i].length; j++) {
                 if (gameField[i][j] === 1) {
@@ -54,7 +63,32 @@ function displayGame() {
         for (var i = 0; i < gameSpawn.length; i++) {
             context.drawImage(canvas.spawn, gameSpawn[i][0] - 32 - camera[0], gameSpawn[i][1] - 32 - camera[1]);
         }
+
+        // Lower UI
+        context.font = '16px Opensans';
+        context.fillText(`E : ${Math.floor(player.energy * 10) / 10}/${player.energyMax}`, UIGame.lowerUI.energyText[0], UIGame.lowerUI.energyText[1]);
+
+        // Energy bar
+        for (var i = 0; i < player.energyMax; i++) {
+            context.drawImage(canvas.energyEmpty, UIGame.lowerUI.energyBar[0] + 64 * i, UIGame.lowerUI.energyBar[1]);
+        }
+
+        for (var i = 0; i < Math.floor(player.energy); i++) {
+            context.drawImage(canvas.energyFull, UIGame.lowerUI.energyBar[0] + 64 * i, UIGame.lowerUI.energyBar[1]);
+        }
+
+        var energyRound = player.energy - Math.floor(player.energy);
+
+        context.drawImage(canvas.energyFull, 0, 0, Math.floor(64 * energyRound), 32, UIGame.lowerUI.energyBar[0] + 64 * Math.floor(player.energy), UIGame.lowerUI.energyBar[1], Math.floor(64 * energyRound), 32);
     } 
+}
+
+function gameTick() {
+    if (player.energy + player.energyGen < player.energyMax) {
+        player.energy += player.energyGen;
+    } else {
+        player.energy = player.energyMax;
+    }
 }
 
 function mouseUpGame(x, y) {
