@@ -17,6 +17,12 @@ var UIGame = {
 
 function loopGame() {
     displayGame();
+
+    if (state === 'Game') {
+        //playerTick();
+        //playerUnitMove();
+        //enemyMove();
+    }
 }
 
 function displayGame() {
