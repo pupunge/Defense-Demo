@@ -17,13 +17,6 @@ var UIGame = {
 
 function loopGame() {
     displayGame();
-
-    if (state === 'Game') {
-        //playerUnitAttack();
-        //enemyMove();
-        //enemySpawn();
-        //WinLoseHandle();
-    }
 }
 
 function displayGame() {
